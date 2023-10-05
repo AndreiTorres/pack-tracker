@@ -4,6 +4,7 @@ from config.database_config import packs_collection
 from config.database_config import tracking_collection
 from bson import ObjectId
 from datetime import datetime
+from service.email_service import EmailService
 
 class PackService:
 
@@ -16,6 +17,15 @@ class PackService:
         result = packs_collection.insert_one(pack_dict)
 
         if result.acknowledged:
+            packInserted = packs_collection.find_one({"_id": result.inserted_id})
+
+            receiver_email = packInserted["receiver"]["email"]
+            receiver_name = packInserted["receiver"]["name"]
+            pack_id = str(result.inserted_id)
+            current_status = packInserted["status"]
+            tracking_link = f'https://example.com/tracks/{pack_id}'
+
+            EmailService.send_email(receiver_email, receiver_name, pack_id, current_status, tracking_link)
             return result.inserted_id
         else:
             return None
@@ -49,7 +59,15 @@ class PackService:
             pack_dict['receiver'] = dict(updated_pack.receiver)
             packs_collection.update_one({"_id": ObjectId(id)}, {"$set": pack_dict})
             
-            return pack_optional
+            pack_updated = packs_collection.find_one({"_id": ObjectId(id)})
+            receiver_email = pack_updated["receiver"]["email"]
+            receiver_name = pack_updated["receiver"]["name"]
+            pack_id = id
+            current_status = pack_updated["status"]
+            tracking_link = f'https://example.com/tracks/{pack_id}'
+
+            EmailService.send_email(receiver_email, receiver_name, pack_id, current_status, tracking_link)
+            return pack_updated
         else:
             return None
         
