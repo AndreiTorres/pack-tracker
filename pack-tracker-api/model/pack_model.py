@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from person_model import Person
+from model.person_model import Person
 
 class Pack(BaseModel):
     description: str
@@ -9,5 +9,5 @@ class Pack(BaseModel):
     sender: Person
     receiver: Person
     destination: str
-    status: str
+    status: str = "Pendiente"
     
