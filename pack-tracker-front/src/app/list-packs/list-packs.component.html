@@ -2,7 +2,10 @@
 <br>
 
 <div class="container-xxl">
-  <button class="btn btn-success" (click)="openFormModal()">Registrar paquete</button>
+  <div class="options">
+    <button class="btn btn-success" (click)="openFormModal()">Registrar paquete</button>
+    <input type="text" class="filterInput" [(ngModel)]="filteredString" placeholder="Filtrar por...">
+  </div>
 <br>
 <br>
 
@@ -20,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pack of packs | paginate: { itemsPerPage: 5, currentPage: page }">
+    <tr *ngFor="let pack of packs | packsPipe:filteredString |paginate: { itemsPerPage: 5, currentPage: page }">
       <td>{{ pack._id }}</td>
       <td>{{ pack.description }}</td>
       <td>{{ pack.weight }} Kg</td>

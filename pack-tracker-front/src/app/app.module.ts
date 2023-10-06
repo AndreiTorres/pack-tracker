@@ -10,6 +10,8 @@ import { TrackingComponent } from './tracking/tracking.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { PacksPipe } from './pipes/packs.pipe';
+
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LayoutComponent,
     LoginComponent,
     ListPacksComponent,
-    TrackingComponent
+    TrackingComponent,
+    PacksPipe,
   ],
   imports: [
     BrowserModule,

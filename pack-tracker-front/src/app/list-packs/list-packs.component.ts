@@ -23,6 +23,7 @@ export class ListPacksComponent implements OnInit {
   rowData: any
   trackings: any[] = []
   page: number = 1;
+  filteredString: string = '';
 
   constructor(private packService: PackServiceService, private fb: FormBuilder) { }
 

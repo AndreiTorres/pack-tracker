@@ -24,3 +24,14 @@
   justify-content: center;
 }
 
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filterInput {
+  width: 300px;
+  border-radius: 5px;
+  padding: 2px;
+}
+
