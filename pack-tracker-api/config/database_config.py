@@ -8,3 +8,5 @@ database = client['tracker']
 packs_collection: Collection = database['packs']
 
 tracking_collection: Collection = database['tracking']
+
+users_collection: Collection = database['users']

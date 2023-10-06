@@ -23,7 +23,7 @@ class PackService:
             receiver_name = packInserted["receiver"]["name"]
             pack_id = str(result.inserted_id)
             current_status = packInserted["status"]
-            tracking_link = f'https://example.com/tracks/{pack_id}'
+            tracking_link = f'http://localhost:4200/tracking/{pack_id}'
 
             EmailService.send_email(receiver_email, receiver_name, pack_id, current_status, tracking_link)
             return result.inserted_id
@@ -64,7 +64,7 @@ class PackService:
             receiver_name = pack_updated["receiver"]["name"]
             pack_id = id
             current_status = pack_updated["status"]
-            tracking_link = f'https://example.com/tracks/{pack_id}'
+            tracking_link = f'http://localhost:4200/tracking/{pack_id}'
 
             EmailService.send_email(receiver_email, receiver_name, pack_id, current_status, tracking_link)
             return pack_updated
