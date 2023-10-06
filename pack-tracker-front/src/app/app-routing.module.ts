@@ -4,11 +4,11 @@ import { LoginComponent } from './login/login.component';
 import { LayoutComponent } from './layout/layout.component';
 import { ListPacksComponent } from './list-packs/list-packs.component';
 import { TrackingComponent } from './tracking/tracking.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {path: '', component: LayoutComponent},
+  {path: '', component: ListPacksComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'home', component: ListPacksComponent},
   {path: 'tracking/:id', component: TrackingComponent}
 ];
 

@@ -1,1 +1,31 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center cont min-vh-100">
+  <div class="login">
+    <form [formGroup]="validateForm" class="custom-form">
+      <h1>Iniciar sesión</h1>
+      <div *ngIf="errorVisible && (validateForm.controls['email'].errors?.['required'] || validateForm.controls['password'].errors?.['required'])&& isFormSubmitted" class="text-danger">
+        Correo o Contraseña inválidos.
+      </div>
+      <div>
+        <input
+        type="email"
+        name="email"
+        placeholder="Correo Electrónico"
+        required="required"
+        formControlName="email"
+        class="form-control mb-3"
+      />
+      </div>
+      <div>
+        <input
+        type="password"
+        name="password"
+        placeholder="Contraseña"
+        required="required"
+        formControlName="password"
+        class="form-control mb-3"
+      />
+      </div>
+      <button type="submit" (click)="login()" class="btn btn-primary">Iniciar sesión</button>
+    </form>
+  </div>
+</div>
