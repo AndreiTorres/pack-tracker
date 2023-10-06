@@ -20,7 +20,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pack of packs">
+    <tr *ngFor="let pack of packs | paginate: { itemsPerPage: 5, currentPage: page }">
       <td>{{ pack._id }}</td>
       <td>{{ pack.description }}</td>
       <td>{{ pack.weight }} Kg</td>
@@ -37,8 +37,13 @@
     </tr>
   </tbody>
 </table>
+<div class="my-pagination">
+  <pagination-controls class="my-pagination" (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+</div>
+
 
 </div>
+
 
 
  <!-- Modal -->

@@ -22,6 +22,7 @@ export class ListPacksComponent implements OnInit {
   isFormUpdateSubmitted = false;
   rowData: any
   trackings: any[] = []
+  page: number = 1;
 
   constructor(private packService: PackServiceService, private fb: FormBuilder) { }
 
