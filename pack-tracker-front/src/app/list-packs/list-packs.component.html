@@ -1,0 +1,191 @@
+<br>
+<br>
+
+<div class="container-xxl">
+  <button class="btn btn-success" (click)="openFormModal()">Registrar paquete</button>
+<br>
+<br>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Descripción</th>
+      <th>Peso</th>
+      <th>Longitud</th>
+      <th>Ancho</th>
+      <th>Destino</th>
+      <th>Estatus</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let pack of packs">
+      <td>{{ pack._id }}</td>
+      <td>{{ pack.description }}</td>
+      <td>{{ pack.weight }} Kg</td>
+      <td>{{ pack.length }} cm</td>
+      <td>{{ pack.width }} cm</td>
+      <td>{{ pack.destination }}</td>
+      <td>{{ pack.status }}</td>
+      <td>
+        <div class="d-flex justify-content-around align-items-center">
+          <button class="btn btn-success" (click)="openUpdateModal(pack)">Cambiar Estatus</button>
+          <button class="btn btn-secondary" (click)="watchTrackings(pack._id)">Ver historial</button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+
+ <!-- Modal -->
+ <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar paquete</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="validateForm" (ngSubmit)="registerPack()">
+              <div class="mb-3">
+                <label for="description" class="form-label">Descripción:</label>
+                <input type="text" class="form-control" id="description" formControlName="description" aria-describedby="descriptionHelp">
+                <div *ngIf="validateForm.controls['description'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                  El campo Descripción es obligatorio.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="width" class="form-label">Ancho (cm):</label>
+                    <input type="number" class="form-control" id="width" formControlName="width" aria-describedby="widthHelp">
+                    <div *ngIf="validateForm.controls['width'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                      El campo Ancho es obligatorio.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="length" class="form-label">Longitud (cm):</label>
+                    <input type="number" class="form-control" id="length" formControlName="length" aria-describedby="lengthHelp">
+                    <div *ngIf="validateForm.controls['length'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                      El campo Longitud es obligatorio.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="weight" class="form-label">Peso (kg):</label>
+                    <input type="number" class="form-control" id="weight" formControlName="weight" aria-describedby="weightHelp">
+                    <div *ngIf="validateForm.controls['weight'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                      El campo Peso es obligatorio.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="sender_name" class="form-label">Nombre de remitente:</label>
+                <input type="text" class="form-control" id="sender_name" formControlName="sender_name" aria-describedby="sender_nameHelp">
+                <div *ngIf="validateForm.controls['sender_name'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                  El campo Nombre de remitente es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="sender_email" class="form-label">Correo de remitente:</label>
+                <input type="email" class="form-control" id="sender_email" formControlName="sender_email" aria-describedby="sender_emailHelp">
+                <div *ngIf="validateForm.controls['sender_email'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                  El campo Correo de remitente es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="receiver_name" class="form-label">Nombre de receptor:</label>
+                <input type="text" class="form-control" id="receiver_name" formControlName="receiver_name" aria-describedby="receiver_nameHelp">
+                <div *ngIf="validateForm.controls['receiver_name'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                  El campo Nombre de receptor es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="receiver_email" class="form-label">Correo de receptor:</label>
+                <input type="email" class="form-control" id="receiver_email" formControlName="receiver_email" aria-describedby="receiver_emailHelp">
+                <div *ngIf="validateForm.controls['receiver_email'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                  El campo Correo de receptor es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="destination" class="form-label">Destino:</label>
+                <input type="text" class="form-control" id="destination" formControlName="destination" aria-describedby="destinationHelp">
+                <div *ngIf="validateForm.controls['destination'].errors?.['required'] && isFormSubmitted" class="text-danger">
+                  El campo Destino es obligatorio.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Registrar</button>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                  id="btnModalClose">Cancelar</button>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+
+
+<div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar Estatus</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form [formGroup]="validateFormUpdate" (ngSubmit)="updateStatus()">
+              <div class="mb-3">
+                <label for="status" class="form-label">Estatus:</label>
+                <select #rate ngModel="En curso" class="form-select w-50" aria-label="Selecciona un estatus" id="statusSelector" formControlName="status">
+                      <option selected value="En curso">En curso</option>
+                      <option  value="Entregado">Entregado</option>
+              </select>
+              <div *ngIf="validateFormUpdate.controls['status'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                El campo Estatus es obligatorio.
+              </div>
+              </div>
+              <div class="mb-3">
+                <label for="ubication" class="form-label">Ubicación:</label>
+                <input type="text" class="form-control" id="ubication" formControlName="ubication" aria-describedby="ubicationHelp">
+                <div *ngIf="validateFormUpdate.controls['ubication'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Ubicación es obligatorio.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                  id="btnModalClose">Cancelar</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="modalTrackings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Historial de seguimiento</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="modal-body">
+
+          </div>
+      </div>
+  </div>
+</div>

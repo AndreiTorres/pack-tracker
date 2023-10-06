@@ -1,0 +1,70 @@
+<br>
+<br>
+<div class="container mt-4 align-items-center">
+    <div *ngIf="isNotFound">
+      <h3>Ocurrió un error</h3>
+    </div>
+    <div *ngIf="!isNotFound">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center info">
+            <p><strong>Descripción:</strong></p> <span> {{this.pack?.description}}</span> <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex align-items-center info">
+            <p><strong>Peso (kg):</strong></p> <span> {{this.pack?.weight}}</span> <br>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center info">
+            <p><strong>Longitud (cm):</strong></p> <span> {{this.pack?.length}}</span> <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex align-items-center info">
+            <p><strong>Ancho (cm):</strong></p> <span> {{this.pack?.width}}</span> <br>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center info">
+            <p><strong>Destino:</strong></p> <span> {{this.pack?.destination}}</span> <br>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex align-items-center info">
+            <p><strong>Receptor:</strong></p> <span> {{this.pack?.receiver.name}}</span> <br>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h1 class="modal-title fs-5" id="modal-title">Historial de seguimiento</h1>
+        <div *ngIf="this.trackings.length > 0">
+          <div class="tracking-list">
+            <ul>
+              <li *ngFor="let tracking of trackings">
+                <div class="tracking-item">
+                  <div class="location">
+                    El paquete llegó a la sucursal de Pack Tracker en {{ tracking.ubication }}
+                  </div>
+                  <div class="timestamp">
+                    el día {{ formatDate(tracking.date) }} a las {{ tracking.time }}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div *ngIf="this.trackings.length === 0">
+          <p>No se han registrado movimientos para este paquete</p>
+        </div>
+      </div>
+    </div>
+
+
+</div>
+
