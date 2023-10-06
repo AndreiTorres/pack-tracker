@@ -23,7 +23,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let pack of packs | packsPipe:filteredString |paginate: { itemsPerPage: 5, currentPage: page }">
+    <tr *ngFor="let pack of packs | packsPipe:filteredString |paginate: { itemsPerPage: 10, currentPage: page }">
       <td>{{ pack._id }}</td>
       <td>{{ pack.description }}</td>
       <td>{{ pack.weight }} Kg</td>
