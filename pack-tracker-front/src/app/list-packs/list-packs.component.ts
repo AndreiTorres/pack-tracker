@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { PackServiceService } from '../service/pack-service.service';
-import { ModalService } from '../service/modal.service';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 declare var window: any
@@ -17,8 +16,10 @@ export class ListPacksComponent implements OnInit {
   formModalUpdate: any
   modalTrackings: any
   modalDelete: any;
+  modalUpdateInformation: any;
   validateForm!: FormGroup;
   validateFormUpdate!: FormGroup;
+  validateFormUpdateInformation!: FormGroup;
   isFormSubmitted = false;
   isFormUpdateSubmitted = false;
   rowData: any
@@ -26,6 +27,18 @@ export class ListPacksComponent implements OnInit {
   page: number = 1;
   filteredString: string = '';
   packToDeleteId: string = '';
+
+  // Campos del formulario para actualizar
+  description: string = '';
+  weight: number = 0;
+  width: number = 0;
+  length: number = 0;
+  sender_name: string = '';
+  sender_email: string = '';
+  receiver_name: string = '';
+  receiver_email: string = '';
+  destination: string = '';
+
 
   constructor(private packService: PackServiceService, private fb: FormBuilder) { }
 
@@ -50,6 +63,10 @@ export class ListPacksComponent implements OnInit {
       document.getElementById('modalDelete')
     )
 
+    this.modalUpdateInformation = new window.bootstrap.Modal(
+      document.getElementById('modalUpdateInformation')
+    )
+
 
     this.validateForm = this.fb.group({
       description: [null, [Validators.required]],
@@ -68,7 +85,17 @@ export class ListPacksComponent implements OnInit {
       ubication: [null, [Validators.required]],
     });
 
-
+    this.validateFormUpdateInformation = this.fb.group({
+      description_update: [null, [Validators.required]],
+      width_update: [null, [Validators.required]],
+      length_update: [null, [Validators.required]],
+      weight_update: [null, [Validators.required]],
+      sender_name_update: [null, [Validators.required]],
+      sender_email_update: [null, [Validators.required]],
+      receiver_name_update: [null, [Validators.required]],
+      receiver_email_update: [null, [Validators.required]],
+      destination_update: [null, [Validators.required]],
+    });
   }
 
   loadPacks(): void {
@@ -82,7 +109,22 @@ export class ListPacksComponent implements OnInit {
     this.formModal.show()
   }
 
-  openUpdateModal(pack: any) {
+  openUpdateInformationModal(pack: any) {
+    this.isFormUpdateSubmitted = false
+    this.rowData = pack
+    this.description = pack.description
+    this.width = pack.width
+    this.weight = pack.weight
+    this.length = pack.length
+    this.sender_name = pack.sender.name
+    this.sender_email = pack.sender.email
+    this.receiver_name = pack.receiver.name
+    this.receiver_email = pack.receiver.email
+    this.destination = pack.destination
+    this.modalUpdateInformation.show()
+  }
+
+  openUpdateStatusModal(pack: any) {
     this.isFormUpdateSubmitted = false
     this.rowData = pack
     this.validateFormUpdate.reset();
@@ -226,6 +268,41 @@ export class ListPacksComponent implements OnInit {
         console.log("Ocurrió un error al eliminar el paquete")
       }
     )
+  }
+
+  updatePackInformation() {
+    this.isFormUpdateSubmitted = true
+
+    if (this.validateFormUpdateInformation.valid) {
+
+      this.rowData.description = this.validateFormUpdateInformation.value.description_update;
+      this.rowData.width = this.validateFormUpdateInformation.value.width_update;
+      this.rowData.length = this.validateFormUpdateInformation.value.length_update;
+      this.rowData.weight = this.validateFormUpdateInformation.value.weight_update;
+      this.rowData.sender.name = this.validateFormUpdateInformation.value.sender_name_update;
+      this.rowData.sender.email = this.validateFormUpdateInformation.value.sender_email_update;
+      this.rowData.receiver.name = this.validateFormUpdateInformation.value.receiver_name_update;
+      this.rowData.receiver.email = this.validateFormUpdateInformation.value.receiver_email_update;
+      this.rowData.destination = this.validateFormUpdateInformation.value.destination_update;
+
+      this.packService.updatePackInformation(this.rowData).subscribe(
+        (response) => {
+          this.modalUpdateInformation.hide()
+          this.loadPacks()
+        },
+        (error) => {
+          console.log("Ocurrió un error al actualizar la información")
+        }
+      )
+    } else {
+        console.log("Son incorrectos")
+        Object.values(this.validateFormUpdateInformation.controls).forEach(control => {
+          if (control.invalid) {
+            control.markAsDirty();
+            control.updateValueAndValidity({ onlySelf: true });
+          }
+        });
+    }
   }
 
 }

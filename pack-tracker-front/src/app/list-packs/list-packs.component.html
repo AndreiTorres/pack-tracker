@@ -36,7 +36,8 @@
       <td>
         <div class="d-flex justify-content-around align-items-center">
           <button class="btn btn-secondary" (click)="watchTrackings(pack._id)">Historial</button>
-          <button class="btn btn-success" (click)="openUpdateModal(pack)">Cambiar Estatus</button>
+          <button class="btn btn-success" (click)="openUpdateInformationModal(pack)">Información</button>
+          <button class="btn btn-success" (click)="openUpdateStatusModal(pack)">Cambiar Estatus</button>
           <button class="btn btn-danger" (click)="openDeleteModal(pack._id)">Borrar</button>
         </div>
       </td>
@@ -231,3 +232,98 @@
  </div>
 </div>
 
+<!-- Modal Actualizar-->
+<div class="modal fade" id="modalUpdateInformation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Actualizar información</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+
+            <form [formGroup]="validateFormUpdateInformation" (ngSubmit)="updatePackInformation()">
+              <div class="mb-3">
+                <label for="description_update" class="form-label">Descripción:</label>
+                <input type="text" class="form-control" id="description_update"  formControlName="description_update" aria-describedby="descriptionHelp" [(ngModel)]="description">
+                <div *ngIf="validateFormUpdateInformation.controls['description_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Descripción es obligatorio.
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="width_update" class="form-label">Ancho (cm):</label>
+                    <input type="number" class="form-control" id="width" formControlName="width_update" aria-describedby="widthHelp" [(ngModel)]="width">
+                    <div *ngIf="validateFormUpdateInformation.controls['width_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                      El campo Ancho es obligatorio.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="length" class="form-label">Longitud (cm):</label>
+                    <input type="number" class="form-control" id="length" formControlName="length_update" aria-describedby="lengthHelp" [(ngModel)]="length">
+                    <div *ngIf="validateFormUpdateInformation.controls['length_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                      El campo Longitud es obligatorio.
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="mb-3">
+                    <label for="weight" class="form-label">Peso (kg):</label>
+                    <input type="number" class="form-control" id="weight" formControlName="weight_update" aria-describedby="weightHelp" [(ngModel)]="weight">
+                    <div *ngIf="validateFormUpdateInformation.controls['weight_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                      El campo Peso es obligatorio.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="sender_name" class="form-label">Nombre de remitente:</label>
+                <input type="text" class="form-control" id="sender_name" formControlName="sender_name_update" aria-describedby="sender_nameHelp" [(ngModel)]="sender_name">
+                <div *ngIf="validateFormUpdateInformation.controls['sender_name_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Nombre de remitente es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="sender_email" class="form-label">Correo de remitente:</label>
+                <input type="email" class="form-control" id="sender_email" formControlName="sender_email_update" aria-describedby="sender_emailHelp" [(ngModel)]="sender_email">
+                <div *ngIf="validateFormUpdateInformation.controls['sender_email_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Correo de remitente es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="receiver_name" class="form-label">Nombre de receptor:</label>
+                <input type="text" class="form-control" id="receiver_name" formControlName="receiver_name_update" aria-describedby="receiver_nameHelp" [(ngModel)]="receiver_name">
+                <div *ngIf="validateFormUpdateInformation.controls['receiver_name_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Nombre de receptor es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="receiver_email" class="form-label">Correo de receptor:</label>
+                <input type="email" class="form-control" id="receiver_email" formControlName="receiver_email_update" aria-describedby="receiver_emailHelp" [(ngModel)]="receiver_email">
+                <div *ngIf="validateFormUpdateInformation.controls['receiver_email_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Correo de receptor es obligatorio.
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="destination" class="form-label">Destino:</label>
+                <input type="text" class="form-control" id="destination" formControlName="destination_update" aria-describedby="destinationHelp" [(ngModel)]="destination">
+                <div *ngIf="validateFormUpdateInformation.controls['destination_update'].errors?.['required'] && isFormUpdateSubmitted" class="text-danger">
+                  El campo Destino es obligatorio.
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Actualizar</button>
+            </form>
+          </div>
+
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                  id="btnModalClose">Cancelar</button>
+          </div>
+      </div>
+  </div>
+</div>

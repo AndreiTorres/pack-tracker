@@ -119,6 +119,33 @@ export class PackServiceService {
     return this.http.put<Pack>(this.apiUrl + "/packs/" + pack._id, pack_update, httpOptions);
   }
 
+  updatePackInformation(pack:any): Observable<Pack> {
+    const pack_update: Pack = {
+      description: pack.description,
+      width: pack.width,
+      length: pack.length,
+      weight: pack.weight,
+      sender: {
+        name: pack.sender.name,
+        email: pack.sender.email,
+      },
+      receiver: {
+        name: pack.receiver.name,
+        email: pack.receiver.email,
+      },
+      destination: pack.destination,
+      status: pack.status,
+    };
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+
+    return this.http.put<Pack>(this.apiUrl + "/packs/" + pack._id, pack_update, httpOptions);
+  }
+
   registerTracking(id: string, ubication: string): Observable<Tracking> {
     const tracking: Tracking = {
       pack_id: id,
