@@ -105,3 +105,11 @@ class PackService:
             return trackings_list
 
         return trackings_list
+    
+
+    @staticmethod
+    def delete_pack_by_id(id: str):
+
+        result = packs_collection.delete_one({"_id": ObjectId(id)})
+
+        return result.acknowledged and result.deleted_count == 1

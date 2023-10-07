@@ -88,4 +88,17 @@ async def update_pack(id: str, updated_pack: Annotated[Pack, Body()], response:R
     else:
         raise HTTPException(status.HTTP_404_NOT_FOUND, detail = "Paquete no encontrado")
 
+@router.delete("/packs/{id}", status_code = 204)
+async def delete_pack_by_id(id: str, response: Response):
 
+    try:
+        result = PackService.delete_pack_by_id(id)
+    except errors.InvalidId:
+        raise HTTPException(status_code = 400, detail = "Solicitud incorrecta: El formato del ID es incorrecto")
+    except Exception as e:
+        raise HTTPException(status_code = 500, detail = e)
+    
+    if result:
+        response.status_code = status.HTTP_204_NO_CONTENT
+    else:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, detail = "Paquete no encontrado")
