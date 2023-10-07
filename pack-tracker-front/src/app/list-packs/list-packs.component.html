@@ -9,6 +9,23 @@
 <br>
 <br>
 
+<div *ngIf="statusSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se ha actualizado el estado del paquete exitosamente.
+</div>
+<div *ngIf="registerSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se ha registrado el paquete exitosamente.
+</div>
+<div *ngIf="updateInformationSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se ha actualizado la información del paquete exitosamente.
+</div>
+<div *ngIf="deleteSuccess" class="alert alert-success alert-dismissible fade show" role="alert">
+  Se ha borrado el paquete exitosamente.
+</div>
+
+<div *ngIf="statusFailure" class="alert alert-danger alert-dismissible fade show" role="alert">
+  Ha ocurrido un error. Por favor, inténtelo de nuevo más tarde.
+</div>
+
 <table class="table table-hover">
   <thead>
     <tr>

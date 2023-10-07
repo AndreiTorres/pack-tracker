@@ -39,6 +39,12 @@ export class ListPacksComponent implements OnInit {
   receiver_email: string = '';
   destination: string = '';
 
+  statusSuccess: boolean = false;
+  registerSuccess: boolean = false;
+  updateInformationSuccess: boolean = false;
+  deleteSuccess: boolean = false;
+
+  statusFailure: boolean = false;
 
   constructor(private packService: PackServiceService, private fb: FormBuilder) { }
 
@@ -142,15 +148,18 @@ export class ListPacksComponent implements OnInit {
         (response) => {
             this.packService.registerTracking(this.rowData._id, ubication).subscribe(
               (response) => {
-                console.log("Se registro el seguimiento del paquete")
+                this.statusSuccess = true;
                 this.loadPacks()
+                setTimeout(() => {
+                this.statusSuccess = false;
+              }, 4000);
               },
               (error) => {
-                console.log("Ocurrio un error al registrar seguimiento del paquete")
+                this.showErrorLabel()
               }
             )
       }, (error) => {
-        console.log("Ocurrio un error al actualizar estatus")
+        this.showErrorLabel()
       }
       );
 
@@ -189,12 +198,15 @@ export class ListPacksComponent implements OnInit {
         receiver_name,
         receiver_email,
         destination ).subscribe((response) => {
-            console.log("Paquete registrado exitosamente")
             this.formModal.hide()
+            this.registerSuccess = true;
             this.loadPacks()
+            setTimeout(() => {
+              this.registerSuccess = false;
+              }, 4000);
           },
           (error) => {
-            console.error('Error al crear el paquete', error);
+            this.showErrorLabel()
           }
         );
 
@@ -244,7 +256,7 @@ export class ListPacksComponent implements OnInit {
         }
       },
       (error) => {
-        console.log("Ocurrió un error al solicitar historial de seguimiento")
+        this.showErrorLabel()
       }
     )
 
@@ -262,10 +274,14 @@ export class ListPacksComponent implements OnInit {
     this.packService.deletePackById(pack_id).subscribe(
       (response) => {
         this.modalDelete.hide()
+        this.deleteSuccess = true;
         this.loadPacks()
+        setTimeout(() => {
+            this.deleteSuccess = false;
+        }, 4000);
       },
       (error) => {
-        console.log("Ocurrió un error al eliminar el paquete")
+        this.showErrorLabel()
       }
     )
   }
@@ -288,14 +304,17 @@ export class ListPacksComponent implements OnInit {
       this.packService.updatePackInformation(this.rowData).subscribe(
         (response) => {
           this.modalUpdateInformation.hide()
+          this.updateInformationSuccess = true;
           this.loadPacks()
+          setTimeout(() => {
+            this.updateInformationSuccess = false;
+        }, 4000);
         },
         (error) => {
-          console.log("Ocurrió un error al actualizar la información")
+          this.showErrorLabel()
         }
       )
     } else {
-        console.log("Son incorrectos")
         Object.values(this.validateFormUpdateInformation.controls).forEach(control => {
           if (control.invalid) {
             control.markAsDirty();
@@ -305,4 +324,11 @@ export class ListPacksComponent implements OnInit {
     }
   }
 
+  showErrorLabel() {
+    this.statusFailure = true;
+    this.loadPacks()
+    setTimeout(() => {
+      this.statusFailure = false;
+    }, 4000);
+  }
 }
