@@ -9,7 +9,7 @@ import { Tracking } from './tracking.model';
 })
 export class PackServiceService {
 
-  apiUrl = "http://127.0.0.1:8099";
+  apiUrl = "http://127.0.0.1:8098";
 
   constructor(private http: HttpClient) { }
 
@@ -31,6 +31,16 @@ export class PackServiceService {
   });
 
   return this.http.get(this.apiUrl + "/packs/" + id, { headers: header })
+  }
+
+  deletePackById(id: string) {
+    let header: HttpHeaders = new HttpHeaders({
+      Accept: "application/json",
+      "Content-Type": "application/json; charset='utf-8'",
+     'Access-Control-Allow-Origin': '*'
+  });
+
+  return this.http.delete(this.apiUrl + "/packs/" + id, { headers: header })
   }
 
 

@@ -16,6 +16,7 @@ export class ListPacksComponent implements OnInit {
   formModal: any
   formModalUpdate: any
   modalTrackings: any
+  modalDelete: any;
   validateForm!: FormGroup;
   validateFormUpdate!: FormGroup;
   isFormSubmitted = false;
@@ -24,6 +25,7 @@ export class ListPacksComponent implements OnInit {
   trackings: any[] = []
   page: number = 1;
   filteredString: string = '';
+  packToDeleteId: string = '';
 
   constructor(private packService: PackServiceService, private fb: FormBuilder) { }
 
@@ -42,6 +44,10 @@ export class ListPacksComponent implements OnInit {
 
     this.modalTrackings = new window.bootstrap.Modal(
       document.getElementById('modalTrackings')
+    )
+
+    this.modalDelete = new window.bootstrap.Modal(
+      document.getElementById('modalDelete')
     )
 
 
@@ -163,9 +169,8 @@ export class ListPacksComponent implements OnInit {
 
 
   watchTrackings(id: string): void {
-    console.log(id)
 
-    const modalBody = document.getElementById('modal-body')
+    const modalBody = document.getElementById('modalBody')
 
     this.packService.getTrackingByPackId(id).subscribe(
       (response) => {
@@ -174,7 +179,6 @@ export class ListPacksComponent implements OnInit {
         if (this.trackings.length > 0) {
           if (modalBody) {
             let html = `<div class="tracking-list"><ul>`
-            console.log(this.trackings)
             for (let tracking of this.trackings) {
               let date = new Date(tracking.date).toISOString().split('T')[0];
               html += `<li>`
@@ -204,6 +208,24 @@ export class ListPacksComponent implements OnInit {
 
 
     this.modalTrackings.show()
+  }
+
+  openDeleteModal(pack_id: string) {
+    this.packToDeleteId = pack_id;
+    this.modalDelete.show()
+  }
+
+  deletePackById(pack_id: string) {
+
+    this.packService.deletePackById(pack_id).subscribe(
+      (response) => {
+        this.modalDelete.hide()
+        this.loadPacks()
+      },
+      (error) => {
+        console.log("Ocurrió un error al eliminar el paquete")
+      }
+    )
   }
 
 }

@@ -30,11 +30,14 @@
       <td>{{ pack.length }} cm</td>
       <td>{{ pack.width }} cm</td>
       <td>{{ pack.destination }}</td>
-      <td>{{ pack.status }}</td>
+      <td >
+        {{ pack.status }}
+      </td>
       <td>
         <div class="d-flex justify-content-around align-items-center">
+          <button class="btn btn-secondary" (click)="watchTrackings(pack._id)">Historial</button>
           <button class="btn btn-success" (click)="openUpdateModal(pack)">Cambiar Estatus</button>
-          <button class="btn btn-secondary" (click)="watchTrackings(pack._id)">Ver historial</button>
+          <button class="btn btn-danger" (click)="openDeleteModal(pack._id)">Borrar</button>
         </div>
       </td>
     </tr>
@@ -49,7 +52,7 @@
 
 
 
- <!-- Modal -->
+ <!-- Modal Registrar-->
  <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
       <div class="modal-content">
@@ -145,7 +148,7 @@
 </div>
 <br>
 
-
+<!-- Modal Actualizar Estatus -->
 <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
       <div class="modal-content">
@@ -183,7 +186,7 @@
   </div>
 </div>
 
-
+<!-- Modal Seguimiento -->
 <div class="modal fade" id="modalTrackings" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -191,9 +194,40 @@
               <h1 class="modal-title fs-5" id="exampleModalLabel">Historial de seguimiento</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body" id="modal-body">
+          <div class="modal-body" id="modalBody">
 
           </div>
       </div>
   </div>
 </div>
+
+<!-- Modal Borrar-->
+<div class="modal fade" id="modalDelete" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+     <div class="modal-content">
+         <div class="modal-header">
+             <h5 class="modal-title fs-5" id="exampleModalLabel">Eliminar
+                 paquete</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button>
+         </div>
+         <div class="modal-body">
+             <p>¿Estás seguro de que deseas eliminar este paquete?</p>
+         </div>
+         <div class="modal-footer align-self-center">
+          <button type="button" class="btn btn-danger"
+          data-bs-dismiss="modal" (click)="deletePackById(packToDeleteId)"
+          id="btnModalClose">Si
+          </button>
+
+             <button type="button" class="btn btn-secondary"
+                     data-bs-dismiss="modal"
+                     id="btnModalClose">No
+             </button>
+
+         </div>
+     </div>
+ </div>
+</div>
+
